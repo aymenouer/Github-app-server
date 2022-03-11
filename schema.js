@@ -3,7 +3,7 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   type Query {
     "Query to get repositories array for the homepage"
-    repositoriesForHome: [Repository!]!
+    repositoriesForHome(loadpage: Int!,language:String,page:Int): [Repository!]!
   }
   "A Repository "
   type Repository {
@@ -16,6 +16,8 @@ const typeDefs = gql`
     html_url: String
     "The repo's complete description"
     description: String
+    "The repo's language"
+    language: String
     "The number of stars of repo "
     stargazers_count: Int
   }

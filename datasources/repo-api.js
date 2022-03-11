@@ -6,7 +6,7 @@ class RepoAPI extends RESTDataSource {
     this.baseURL = 'https://api.github.com/search/';
   }
 
-  getRepositoriesForHome() {
+  getRepositoriesForHome(loadpage,language,page) {
     const now = new Date();
 
     const date_last_week= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -16,8 +16,10 @@ class RepoAPI extends RESTDataSource {
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
-
-    return this.get(`repositories?q=created:>${yyyy+"-"+mm+"-"+dd}&sort=stars&order=desc`).then(data=>data.items);
+    const lang = language === "" ? "" : "+language:"+language;
+    const p = page === 1 ? "" :"&page="+page;
+   
+    return this.get(`repositories?q=created:>${yyyy+"-"+mm+"-"+dd+lang}&sort=stars&order=desc&per_page=${loadpage+p}`).then(data=>data.items);
   }
 
   
